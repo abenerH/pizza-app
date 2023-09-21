@@ -6,7 +6,8 @@ import Menu from './routes/Menu.jsx'
 import Orders from './routes/Orders.jsx'
 import Login from './routes/Login.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import OrderContextProvider from './store/OrderContextProvider.jsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css';
 
 const router = createBrowserRouter([
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <OrderContextProvider>
+      <RouterProvider router={router} />
+    </OrderContextProvider>
   </React.StrictMode>,
 )
