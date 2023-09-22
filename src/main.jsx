@@ -1,14 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import Index from './routes/Index.jsx'
-import Menu from './routes/Menu.jsx'
-import Orders from './routes/Orders.jsx'
-import Login from './routes/Login.jsx'
-import ErrorPage from './routes/ErrorPage.jsx'
 import OrderContextProvider from './store/OrderContextProvider.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css';
+
+//ROUTES
+import { MenuRoute, 
+  LoginRoute, 
+  OrdersRoute, 
+  IndexRoute, 
+  ErrorPage } 
+  from './routes/Routes.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,19 +20,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Index />,
+        element: <IndexRoute />,
       },
       {
         path: "/menu",
-        element: <Menu />,
+        element: <MenuRoute />,
       },
       {
         path: "/myorder",
-        element: <Orders />,
+        element: <OrdersRoute />,
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <LoginRoute />,
       },
     ],
     errorElement: <ErrorPage />

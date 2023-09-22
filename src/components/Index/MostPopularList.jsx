@@ -1,8 +1,8 @@
 import React from 'react'
-import FoodItem from './FoodItem/FoodItem'
-import popular1 from '../assets/popular1.jpg'
-import popular2 from '../assets/popular2.jpg'
-import popular3 from '../assets/popular3.jpg'
+import FoodItem from '../FoodItem/FoodItem'
+import popular1 from '../../assets/popular1.jpg'
+import popular2 from '../../assets/popular2.jpg'
+import popular3 from '../../assets/popular3.jpg'
 
 const MostPopularList = () => {
   return (

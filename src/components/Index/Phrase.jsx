@@ -1,6 +1,6 @@
 import React from 'react'
-import Card from '../UI/Card/Card'
-import pizzaBackground from '../assets/pizza_background.jpg'
+import Card from '../../UI/Card/Card'
+import pizzaBackground from '../../assets/pizza_background.jpg'
 
 const Phrase = () => {
   return (

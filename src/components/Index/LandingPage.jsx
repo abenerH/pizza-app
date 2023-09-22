@@ -1,6 +1,6 @@
 
-import mobileBackground from '../assets/portrait_background.jpg';
-import landscapeBackground from '../assets/landscape_background_cut.jpg';
+import mobileBackground from '../../assets/portrait_background.jpg';
+import landscapeBackground from '../../assets/landscape_background_cut.jpg';
 
 const LandingPage = () => {
   return (

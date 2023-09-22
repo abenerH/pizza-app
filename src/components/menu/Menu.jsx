@@ -1,5 +1,5 @@
-import {useState, useEffect, useCallback} from 'react'
-import MenuGrid from '../components/menu/MenuGrid'
+import {useState, useEffect} from 'react'
+import MenuGrid from './MenuGrid'
 
 const Menu = () => {
 
@@ -34,7 +34,7 @@ const Menu = () => {
   let content = isLoading ? (<h2 className='absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] text-4xl text-white bold my-12'>Loading...</h2>) : (<MenuGrid products={products} />) 
 
   return (
-    <div className='min-h-[100vh] bg-red-500 text-center pt-[100px] pb-[13rem] px-[2rem] relative'>
+    <div className='min-h-[100vh] bg-red-500 text-center pt-[100px] pb-[13rem] px-2 relative'>
       <h2 className='text-4xl text-white bold italic'>What are you craving for today?</h2>
 
       {content}

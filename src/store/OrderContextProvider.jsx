@@ -2,7 +2,8 @@ import OrderContext from "./OrderContext";
 import { useReducer } from "react";
 
 const defaultOrderState = {
-  date: new Date(),
+  date: "",
+  isActive: false,
   items: [],
   total: 0,
 };
@@ -52,7 +53,7 @@ const orderReducer = (state, { type, payload }) => {
     let updatedItems;
 
     if (item.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id === id);
+      updatedItems = state.items.filter((item) => item.id !== id);
     } else {
       const updatedItem = { ...item, amount: item.amount - 1 };
       updatedItems = [...state.items];
@@ -81,6 +82,9 @@ const OrderContextProvider = ({ children }) => {
   const removeItemFromOrderHandler = (id) => {
     orderStateDispatcher({ type: "REMOVE_ITEM_FROM_ORDER", payload: id });
   };
+
+  // This reducer method will set a date and isActive to true, when the order has been payed
+  // const setOrderActive = () => { orderStateDispatcher({ type: "SET_ORDER_TO_ACTIVE"}); }
 
   const orderContext = {
     date: orderState.date,
