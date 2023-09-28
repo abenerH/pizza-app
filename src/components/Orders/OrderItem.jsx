@@ -7,7 +7,7 @@ const OrderItem = ({product}) => {
   const orderContext = useContext(OrderContext);
 
   const onRemoveElementHandler = () =>{
-    orderContext.removeItem(product.id);
+    orderContext.removeItem(product.id, product.category);
   }
 
   const onAddElementHandler = () => {
@@ -16,7 +16,7 @@ const OrderItem = ({product}) => {
 
   return (
     <Card className={'w-full min-h-[100px] my-2 lg:py-0 md:px-4 flex items-center'}>
-            <h2 className='lg:text-2xl font-bold italic w-2/4 '>{product.title}</h2>
+            <h2 className='lg:text-2xl font-bold italic w-2/4 '>{product.title} ({product.category})</h2>
             <div className='w-3/4 flex flex-col md:flex-row gap-x-2 justify-evenly items-center '>
                 <p className='lg:text-2xl'>${product.price}</p>
                 <p className='lg:text-2xl'>X</p>

@@ -20,6 +20,7 @@ const MenuGrid = ({products}) => {
 
   const closeModal = () =>{
     setShowModal(false);
+    resetStates();
   }
 
   const onItemClicked = (item) => {
@@ -30,11 +31,21 @@ const MenuGrid = ({products}) => {
   const resetStates = () => {
     setItemSelected({});
     setAmount(1);
+    setSize(1);
   }
 
   const onAddToCart = (e) => {
     e.preventDefault();
-    orderContext.addItem({...itemSelected, amount});
+
+    let category = 'small';
+
+    if(size === 2) category = 'medium';
+
+    if(size === 3) category = 'jumbo';
+
+    let customPrice = itemSelected.price[category];
+
+    orderContext.addItem({...itemSelected, price: customPrice, category, amount});
     resetStates();
     setShowModal(false);
   }
@@ -44,7 +55,8 @@ const MenuGrid = ({products}) => {
   }
 
   const onSizeSelected = (e) => {
-
+    e.preventDefault();
+    setSize(+e.target.value);
   }
 
 
@@ -73,9 +85,9 @@ const MenuGrid = ({products}) => {
                 <h4>6 slices</h4>
                 <h4>8 slices</h4>
                 <h4>12 slices</h4>
-                <button className='border-2 border-black px-2 py-4 bg-cyan-400 rounded-b-lg focus:bg-slate-800 focus:text-white hover:bg-gray-400' value={1} onClick={onSizeSelected}>Small</button>
-                <button className='border-2 border-black px-2 py-4 bg-green-500 rounded-b-lg focus:bg-slate-800 focus:text-white hover:bg-gray-400' value={2} onClick={onSizeSelected}>Medium</button>
-                <button className='border-2 border-black px-2 py-4 bg-red-500 rounded-b-lg focus:bg-slate-800 focus:text-white hover:bg-gray-400' value={3} onClick={onSizeSelected}>Jumbo</button>
+                <button className={`border-2 border-black px-2 py-4 ${size === 1 ? `bg-green-400` : `bg-gray-400`} rounded-b-lg hover:bg-green-400`} value={1} onClick={onSizeSelected}>Small</button>
+                <button className= {`border-2 border-black px-2 py-4 ${size === 2 ? `bg-cyan-500` : `bg-gray-500`} rounded-b-lg hover:bg-cyan-500`} value={2} onClick={onSizeSelected}>Medium</button>
+                <button className= {`border-2 border-black px-2 py-4 ${size === 3 ? `bg-red-500` : `bg-gray-600`} rounded-b-lg hover:bg-red-500`} value={3} onClick={onSizeSelected}>Jumbo</button>
               </div>
 
               <h2 className='text-xl lg:text-2xl font-bold text-center'>How many would you like to order?</h2>
