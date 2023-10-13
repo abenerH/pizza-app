@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import MenuGrid from './MenuGrid';
-import useHttp from '../hooks/useHttp';
+import useHttp from '../../hooks/useHttp';
 
 const Menu = () => {
   const [products, setProducts] = useState([]);
@@ -19,10 +19,10 @@ const Menu = () => {
           price: data[productId].price,
         });
       }
-      setProducts(data);
+      setProducts(loadedProducts);
     }
-    fetchProducts({url: "https://pizza-project-daf9d-default-rtdb.firebaseio.com/products.json"}, loadProducts);
-  
+    fetchProducts({url: `${import.meta.env.VITE_FIREBASE_DATABASE_URL}products.json`}, loadProducts);
+     
   }, [fetchProducts])
 
   let content = isLoading ? (<h2 className='absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] text-4xl text-white bold my-12'>Loading...</h2>) : (<MenuGrid products={products} />) 

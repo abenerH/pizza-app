@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react'
 import { createPortal } from "react-dom";
 
-const Modal = (props) => {
+const Modal = ({onAction, children}) => {
 
-  const Backdrop = (props) => {
+  const Backdrop = ({onClick}) => {
     return(
-      <div className="fixed h-[100vh] w-full bg-black bg-opacity-50 z-30" onClick={props.onClick}></div>
+      <div className="fixed h-[100vh] w-full bg-black bg-opacity-50 z-30" onClick={onClick}></div>
     )
   }
 
   const ModalOverlay = () => {
     return (
-      <>{props.children}</>
+      <>{children}</>
     )
   } 
 
@@ -19,8 +19,8 @@ const Modal = (props) => {
 
   return (
     <Fragment>
-      {createPortal(<Backdrop onClick={props.onAction} />, portalElement)}
-      {createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement)}
+      {createPortal(<Backdrop onClick={onAction} />, portalElement)}
+      {createPortal(<ModalOverlay>{children}</ModalOverlay>, portalElement)}
     </Fragment>
   )
 }

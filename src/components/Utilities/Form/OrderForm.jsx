@@ -1,12 +1,13 @@
 import React from 'react'
 import DeliveryForm from './Delivery/DeliveryForm';
 import PickUpForm from './PickUp/PickUpForm';
+import { order_options } from '../../../helper/dictionary';
 
 const OrderForm = ({onDecrement, onSubmit, orderOption}) => {
 
   return (
     <>
-    {orderOption === 'delivery' 
+    {orderOption === order_options.DELIVERY 
     ? 
     <DeliveryForm onSubmit={onSubmit} onDecrement={onDecrement} /> 
     : 

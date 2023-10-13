@@ -22,7 +22,7 @@ const orderReducer = (state, { type, payload }) => {
     let updatedItem;
     let updatedItems;
 
-    if (existingItem && existingItem.category === payload.category) {
+    if (existingItem && existingItem.size === payload.size) {
       updatedItem = {
         ...existingItem,
         amount: existingItem.amount + payload.amount,
@@ -42,9 +42,9 @@ const orderReducer = (state, { type, payload }) => {
   }
 
   if (type === "REMOVE_ITEM_FROM_ORDER") {
-    const {id, category} = payload;
+    const {id, size} = payload;
 
-    const itemIndex = state.items.findIndex((item) => item.id === id && item.category === category);
+    const itemIndex = state.items.findIndex((item) => item.id === id && item.size === size);
 
     const item = state.items[itemIndex];
 
@@ -53,7 +53,7 @@ const orderReducer = (state, { type, payload }) => {
     let updatedItems;
 
     if (item.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== id || item.category !== category);
+      updatedItems = state.items.filter((item) => item.id !== id || item.size !== size);
     } else {
       const updatedItem = { ...item, amount: item.amount - 1 };
       updatedItems = [...state.items];
@@ -79,8 +79,8 @@ const OrderContextProvider = ({ children }) => {
     orderStateDispatcher({ type: "ADD_ITEM_TO_ORDER", payload: item });
   };
 
-  const removeItemFromOrderHandler = (id, category) => {
-    orderStateDispatcher({ type: "REMOVE_ITEM_FROM_ORDER", payload: {id, category} });
+  const removeItemFromOrderHandler = (id, size) => {
+    orderStateDispatcher({ type: "REMOVE_ITEM_FROM_ORDER", payload: {id, size} });
   };
 
   // This reducer method will set a date and isActive to true, when the order has been payed
