@@ -1,39 +1,39 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react'
 
 const useHttp = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const sendRequest = useCallback(async (requestConfig, applyData) => {
-    setIsLoading(true);
-    setError(false);
+    setIsLoading(true)
+    setError(false)
 
     try {
       const response = await fetch(requestConfig.url, {
-        method: requestConfig.method ? requestConfig.method : "GET",
+        method: requestConfig.method ? requestConfig.method : 'GET',
         headers: requestConfig.headers ? requestConfig.headers : {},
-        body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
-      });
+        body: requestConfig.body ? JSON.stringify(requestConfig.body) : null
+      })
 
       if (!response.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error('Something went wrong!')
       }
 
-      const data = await response.json();
+      const data = await response.json()
 
-      applyData(data);
+      applyData(data)
     } catch (error) {
-      setError(error.message);
+      setError(error.message)
     }
 
-    setIsLoading(false);
-  }, []);
+    setIsLoading(false)
+  }, [])
 
   return {
     isLoading,
     error,
-    sendRequest,
-  };
-};
+    sendRequest
+  }
+}
 
-export default useHttp;
+export default useHttp

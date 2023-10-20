@@ -1,4 +1,3 @@
-import React from 'react'
 import FoodItem from '../FoodItem/FoodItem'
 import popular1 from '../../assets/popular1.jpg'
 import popular2 from '../../assets/popular2.jpg'

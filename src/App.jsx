@@ -1,9 +1,8 @@
 import Navbar from './Layout/Navbar/Navbar'
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom'
 import Footer from './Layout/Footer/Footer'
 
-function App() {
-
+function App () {
   return (
     <>
     <Navbar/>

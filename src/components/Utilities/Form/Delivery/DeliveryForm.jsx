@@ -1,100 +1,99 @@
 import useInput from '../../../../hooks/use-input'
-import {useState} from 'react'
+import { useState } from 'react'
 import { validateName, validatePhone, validateEmail, validateAddress, validateTime } from '../../../../helper/inputValidation'
-import { order_options } from '../../../../helper/dictionary'
+import { orderOptions } from '../../../../helper/dictionary'
+import PropTypes from 'prop-types'
 
 const getFormattedTime = () => {
-    const thirtyMinutes = new Date(Date.now()+60*60000);
-    return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`;
+  const thirtyMinutes = new Date(Date.now() + 60 * 60000)
+  return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`
 }
 
-const DeliveryForm = ({onSubmit, onDecrement}) => {
+const DeliveryForm = ({ onSubmit, onDecrement }) => {
+  const [showTime, setShowTime] = useState(false)
+  const [time, setTime] = useState({
+    time: getFormattedTime(),
+    isValid: true
+  })
 
-    const [showTime, setShowTime] = useState(false);
-    const [time, setTime] = useState({
-        time: getFormattedTime(),
-        isValid: true,
-    });
-    
-    const firstName = useInput(validateName);
-    const lastName = useInput(validateName);
-    const phone = useInput(validatePhone);
-    const address = useInput(validateAddress);
-    const cookingGuidelines = useInput(() => {return true})
-    const deliveryGuidelines = useInput(() => {return true})
-    const email = useInput(validateEmail);
+  const firstName = useInput(validateName)
+  const lastName = useInput(validateName)
+  const phone = useInput(validatePhone)
+  const address = useInput(validateAddress)
+  const cookingGuidelines = useInput(() => { return true })
+  const deliveryGuidelines = useInput(() => { return true })
+  const email = useInput(validateEmail)
 
-    const cleanInputs = () => {
-        firstName.reset();
-        lastName.reset();
-        phone.reset();
-        email.reset();
-        cookingGuidelines.reset();
-        address.reset();
-        deliveryGuidelines.reset();
-        setTime({
-            time: getFormattedTime(),
-            isValid: true,
-        })
+  const cleanInputs = () => {
+    firstName.reset()
+    lastName.reset()
+    phone.reset()
+    email.reset()
+    cookingGuidelines.reset()
+    address.reset()
+    deliveryGuidelines.reset()
+    setTime({
+      time: getFormattedTime(),
+      isValid: true
+    })
+  }
+
+  const onTimeSelected = () => {
+    setShowTime(true)
+    setTime({
+      time: getFormattedTime(),
+      isValid: true
+    })
+  }
+
+  const onTimeDeselected = () => {
+    setShowTime(false)
+    setTime({
+      time: 'ASAP',
+      isValid: true
+    })
+  }
+
+  const onTimeChanged = (e) => {
+    const enteredTime = e.target.value
+
+    if (validateTime(enteredTime)) {
+      setTime({
+        ...time,
+        time: enteredTime
+      })
+    }
+  }
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault()
+    const order = {
+      client: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        phone: phone.value,
+        email: email.value,
+        address: address.value
+      },
+      guidelines: {
+        cooking: cookingGuidelines.value,
+        delivery: deliveryGuidelines.value
+      },
+      type: orderOptions.DELIVERY,
+      requestedAt: time.time
     }
 
-    const onTimeSelected = () => {
-        setShowTime(true);
-        setTime({
-            time: getFormattedTime(),
-            isValid: true,
-        })
-    }
+    onSubmit(order)
+    cleanInputs()
+  }
 
-    const onTimeDeselected = () => {
-        setShowTime(false);
-        setTime({
-            time: 'ASAP',
-            isValid: true,
-        })
-    }
+  let formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && address.isValid
 
-    const onTimeChanged = (e) => { 
+  if (showTime) {
+    formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && address.isValid && time.isValid
+  }
 
-        const enteredTime = e.target.value;
-
-        if(validateTime(enteredTime)){
-            setTime({
-                ...time,
-                time: enteredTime,
-            })
-        }
-    }
-
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-        const order = {
-            client: {
-                firstName: firstName.value,
-                lastName: lastName.value,
-                phone: phone.value,
-                email: email.value,
-                address: address.value
-            },
-            guidelines: {
-                cooking: cookingGuidelines.value,
-                delivery: deliveryGuidelines.value,
-            },
-            type: order_options.DELIVERY,
-            requestedAt: time.time,
-        }
-
-        onSubmit(order);
-        cleanInputs();
-    }
-
-    let formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && address.isValid;
-
-    if(showTime){
-        formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && address.isValid && time.isValid;
-    }
-
-    return(
+  return (
         <>
             <form className='w-full' onSubmit={onSubmitHandler}>
                 <h3>We just need some info for your delivery</h3>
@@ -154,7 +153,7 @@ const DeliveryForm = ({onSubmit, onDecrement}) => {
                         <input className={`w-3/4 lg:w-2/5 border-2 px-8 py-2 text-center ${!time.isValid ? 'border-red-600 bg-red-100' : 'border-gray-400'}`} id='time' name='time' type="time" onChange={onTimeChanged} value={time.time}/>
                         {!time.isValid && <p className='italic text-red-600'>You must enter a valid time</p>}
                     </div>
-                )}
+                    )}
                 </div>
                 <div className='flex w-full gap-x-2'>
                     <button type='button' className='bg-red-500 rounded-lg  text-white text-lg py-4 mt-4 w-full md:w-2/4' onClick={onDecrement}>Go back</button>
@@ -162,7 +161,12 @@ const DeliveryForm = ({onSubmit, onDecrement}) => {
                 </div>
             </form>
         </>
-    )
+  )
 }
 
-export default DeliveryForm;
+DeliveryForm.propTypes = {
+  onSubmit: PropTypes.func,
+  onDecrement: PropTypes.func
+}
+
+export default DeliveryForm

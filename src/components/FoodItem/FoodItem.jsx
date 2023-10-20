@@ -1,8 +1,6 @@
-import React from 'react'
-import placeholder from '../../assets/placeholder_image.png';
-import Card from '../../UI/Card/Card';
+import Card from '../../UI/Card/Card'
 
-const FoodItem = ({image}) => {
+const FoodItem = ({ image }) => {
   return (
     <li>
         <Card className='flex flex-col w-[80%] sm:w-[60%] lg:w-[90%] h-[500px] mx-auto my-4 text-center shadow-xl bg-slate-800 text-white p-2 cursor-pointer'>

@@ -1,16 +1,14 @@
-import React from 'react'
 import Card from '../../UI/Card/Card'
 import menuItem from '../../assets/menu-item.png'
 
-const MenuItem = ({product, onItemClicked}) => {
-
+const MenuItem = ({ product, onItemClicked }) => {
   const itemClickedHandler = () => {
-    onItemClicked(product);
+    onItemClicked(product)
   }
 
-  const small = `$${product.price.small}`;
-  const middle = `$${product.price.medium}`;
-  const jumbo = `$${product.price.jumbo}`;
+  const small = `$${product.price.small}`
+  const middle = `$${product.price.medium}`
+  const jumbo = `$${product.price.jumbo}`
 
   return (
     <Card className={'bg-slate-800 rounded-xl flex overflow-hidden text-white max-h-[250px] cursor-pointer hover:bg-slate-600 py-4 px-2 lg:py-0 lg:px-4'} onclick={itemClickedHandler}>

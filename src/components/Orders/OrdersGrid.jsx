@@ -1,34 +1,34 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import OrderForm from '../Utilities/Form/OrderForm'
 import OrdersContent from './OrdersContent'
+import PropTypes from 'prop-types'
 
-const OrdersGrid = ({items, subtotal, onOrder}) => {
+const OrdersGrid = ({ items, subtotal, onOrder }) => {
+  const [index, setIndex] = useState(1)
+  const [OrderOption, setOrderOption] = useState()
 
-    const [index, setIndex] = useState(1);
-    const [OrderOption, setOrderOption] = useState();
+  const incrementIndex = (orderOption) => {
+    setOrderOption(orderOption)
+    setIndex(index + 1)
+  }
 
-    const incrementIndex = (orderOption) => {
-      setOrderOption(orderOption);
-      setIndex(index + 1);
-    }
+  const decrementIndex = () => {
+    setIndex(index - 1)
+  }
 
-    const decrementIndex = () => {
-      setIndex(index - 1);
-    }
+  let content
 
-    let content;
-    
-    switch(index){
-      case 1: 
-        content = <OrdersContent onIncrement={incrementIndex} items={items} subtotal={subtotal} />
-        break;
-      case 2:
-        content = 
+  switch (index) {
+    case 1:
+      content = <OrdersContent onIncrement={incrementIndex} items={items} subtotal={subtotal} />
+      break
+    case 2:
+      content =
         (
           <OrderForm onDecrement={decrementIndex} onSubmit={onOrder} orderOption={OrderOption}/>
         )
-        break;
-    }
+      break
+  }
 
   return (
     <>
@@ -39,6 +39,12 @@ const OrdersGrid = ({items, subtotal, onOrder}) => {
 
     </>
   )
+}
+
+OrdersGrid.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  subtotal: PropTypes.number,
+  onOrder: PropTypes.func
 }
 
 export default OrdersGrid

@@ -1,13 +1,12 @@
-import React from 'react'
-import OrderItem from './OrderItem';
-import { faMotorcycle, faShop } from '@fortawesome/free-solid-svg-icons';
-import IconButton from '../../UI/Buttons/IconButton';
-import { order_options } from '../../helper/dictionary';
+import OrderItem from './OrderItem'
+import { faMotorcycle, faShop } from '@fortawesome/free-solid-svg-icons'
+import IconButton from '../../UI/Buttons/IconButton'
+import { orderOptions } from '../../helper/dictionary'
+import PropTypes from 'prop-types'
 
-const OrdersContent = ({onIncrement, items, subtotal}) => {
-
-    const total = (subtotal + subtotal* 0.15).toFixed(2);
-    const onIncrementHandler = value => onIncrement(value);
+const OrdersContent = ({ onIncrement, items, subtotal }) => {
+  const total = (subtotal + subtotal * 0.15).toFixed(2)
+  const onIncrementHandler = value => onIncrement(value)
 
   return (
     <>
@@ -22,11 +21,17 @@ const OrdersContent = ({onIncrement, items, subtotal}) => {
             <p>${total}</p>
         </div>
         <div className='w-full flex gap-x-4'>
-            <IconButton option={order_options.PICKUP} color={'green'} icon={faShop} onClick={onIncrementHandler}> {order_options.PICKUP}</IconButton>
-            <IconButton option={order_options.DELIVERY} color={'purple'} icon={faMotorcycle} onClick={onIncrementHandler}> {order_options.DELIVERY}</IconButton>
+            <IconButton option={orderOptions.PICKUP} color={'green'} icon={faShop} onClick={onIncrementHandler}> {orderOptions.PICKUP}</IconButton>
+            <IconButton option={orderOptions.DELIVERY} color={'purple'} icon={faMotorcycle} onClick={onIncrementHandler}> {orderOptions.DELIVERY}</IconButton>
         </div>
     </>
-)
+  )
+}
+
+OrdersContent.propTypes = {
+  onIncrement: PropTypes.func,
+  items: PropTypes.array,
+  subtotal: PropTypes.number
 }
 
 export default OrdersContent

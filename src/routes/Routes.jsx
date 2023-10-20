@@ -4,33 +4,22 @@ import Login from '../components/Login/Login'
 import Menu from '../components/Menu/Menu'
 import Orders from '../components/Orders/Orders'
 
-export function ErrorPage(){
-    return (
-        <Error />
-    )
+export function ErrorPage () {
+  return <Error />
 }
 
-export function IndexRoute(){
-    return(
-        <Index />
-      )    
+export function IndexRoute () {
+  return <Index />
 }
 
-export function LoginRoute(){
-    return(
-        <Login />
-      )    
+export function LoginRoute () {
+  return <Login />
 }
 
-export function OrdersRoute(){
-    return(
-        <Orders />
-    )
+export function OrdersRoute () {
+  return <Orders />
 }
 
-export function MenuRoute(){
-    return(
-        <Menu />
-      )    
+export function MenuRoute () {
+  return <Menu />
 }
-

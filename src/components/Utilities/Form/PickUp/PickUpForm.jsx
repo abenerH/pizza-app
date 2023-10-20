@@ -1,79 +1,76 @@
-import { useState } from 'react';
-import useInput from '../../../../hooks/use-input';
-import { validateName, validatePhone, validateEmail } from '../../../../helper/inputValidation';
-import { order_options } from '../../../../helper/dictionary'
+import { useState } from 'react'
+import useInput from '../../../../hooks/use-input'
+import { validateName, validatePhone, validateEmail } from '../../../../helper/inputValidation'
+import { orderOptions } from '../../../../helper/dictionary'
 
 const getFormattedTime = () => {
-    const thirtyMinutes = new Date(Date.now()+60*60000);
-    return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`;
+  const thirtyMinutes = new Date(Date.now() + 60 * 60000)
+  return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`
 }
 
+const PickUpForm = ({ onSubmit, onDecrement }) => {
+  const [time, setTime] = useState({
+    time: getFormattedTime(),
+    isValid: true
+  })
 
-const PickUpForm = ({onSubmit, onDecrement}) => {
+  const firstName = useInput(validateName)
+  const lastName = useInput(validateName)
+  const phone = useInput(validatePhone)
+  const cookingGuidelines = useInput(() => { return true })
+  const email = useInput(validateEmail)
 
-    const [time, setTime] = useState({
-        time: getFormattedTime(),
-        isValid: true,
-    });
+  const cleanInputs = () => {
+    firstName.reset()
+    lastName.reset()
+    phone.reset()
+    email.reset()
+    cookingGuidelines.reset()
+    setTime({
+      time: getFormattedTime(),
+      isValid: true
+    })
+  }
 
-    const firstName = useInput(validateName);
-    const lastName = useInput(validateName);
-    const phone = useInput(validatePhone);
-    const cookingGuidelines = useInput(() => {return true})
-    const email = useInput(validateEmail);
+  const validateTime = value => value.length > 0
 
-    const cleanInputs = () => {
-        firstName.reset();
-        lastName.reset();
-        phone.reset();
-        email.reset();
-        cookingGuidelines.reset();
-        setTime({
-            time: getFormattedTime(),
-            isValid: true,
-        });
+  const onTimeChanged = (e) => {
+    const enteredTime = e.target.value
+
+    if (validateTime(enteredTime)) {
+      const splittedTime = enteredTime.split(':')
+      const formattedTime = `${splittedTime[0]}:${splittedTime[1]}`
+      setTime({
+        ...time,
+        time: formattedTime
+      })
+    }
+  }
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault()
+
+    const order = {
+      client: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        phone: phone.value,
+        email: email.value
+      },
+      guidelines: {
+        cooking: cookingGuidelines.value
+      },
+      type: orderOptions.PICKUP,
+      requestedAt: time.time
     }
 
-    const validateTime = value => value.length > 0;
+    onSubmit(order)
+    cleanInputs()
+  }
 
-    const onTimeChanged = (e) => { 
+  const formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && time.isValid
 
-        const enteredTime = e.target.value;
-
-        if(validateTime(enteredTime)){
-            const splittedTime = enteredTime.split(':');
-            const formattedTime = `${splittedTime[0]}:${splittedTime[1]}`
-            setTime({
-                ...time,
-                time: formattedTime,
-            })
-        }
-    }
-
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-
-        const order = {
-            client: {
-                firstName: firstName.value,
-                lastName: lastName.value,
-                phone: phone.value,
-                email: email.value,
-            },
-            guidelines: {
-                cooking: cookingGuidelines.value,
-            },
-            type: order_options.PICKUP,
-            requestedAt: time.time,
-        }
-
-        onSubmit(order);
-        cleanInputs();
-    }
-
-    const formIsValid = firstName.isValid && lastName.isValid && phone.isValid && email.isValid && time.isValid;;
-
-        return(
+  return (
         <form className='w-full' onSubmit={onSubmitHandler}>
         <h3>We just need some info for the time you come pick up your order</h3>
         <div className='flex flex-col gap-2 items-center md:items-start my-4'>
@@ -118,7 +115,7 @@ const PickUpForm = ({onSubmit, onDecrement}) => {
             <button type='submit' disabled={!formIsValid} className={`${formIsValid ? 'bg-green-500' : 'bg-gray-400 cursor-not-allowed'} rounded-lg text-white text-lg py-4 mt-4 w-full md:w-2/4`}>Order now</button>
         </div>
     </form>
-    )
+  )
 }
 
-export default PickUpForm;
+export default PickUpForm

@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import OrderContextProvider from './store/OrderContextProvider.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './index.css';
+import './index.css'
 
-//ROUTES
-import { MenuRoute, 
-  LoginRoute, 
-  OrdersRoute, 
-  IndexRoute, 
-  ErrorPage } 
+// ROUTES
+import {
+  MenuRoute,
+  LoginRoute,
+  OrdersRoute,
+  IndexRoute,
+  ErrorPage
+}
   from './routes/Routes.jsx'
 
 const router = createBrowserRouter([
@@ -19,21 +21,21 @@ const router = createBrowserRouter([
     element: <App/>,
     children: [
       {
-        path: "/",
-        element: <IndexRoute />,
+        path: '/',
+        element: <IndexRoute />
       },
       {
-        path: "/menu",
-        element: <MenuRoute />,
+        path: '/menu',
+        element: <MenuRoute />
       },
       {
-        path: "/myorder",
-        element: <OrdersRoute />,
+        path: '/myorder',
+        element: <OrdersRoute />
       },
       {
-        path: "/login",
-        element: <LoginRoute />,
-      },
+        path: '/login',
+        element: <LoginRoute />
+      }
     ],
     errorElement: <ErrorPage />
   }
@@ -44,5 +46,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <OrderContextProvider>
       <RouterProvider router={router} />
     </OrderContextProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

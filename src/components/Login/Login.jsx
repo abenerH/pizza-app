@@ -9,7 +9,7 @@ const Login = () => {
             <input className='p-4 border-2 border-black w-3/4 md:w-2/4' type="text" placeholder='Your email' />
             <input className='p-4 border-2 border-black w-3/4 md:w-2/4' type="password" placeholder='Your password'/>
             <div className='flex w-2/4 gap-2'>
-                <input className='p-4 bg-slate-800 text-white w-full hover:bg-black hover:underline' type="submit" value="Login" onClick={(e) => {e.preventDefault()}}/>
+                <input className='p-4 bg-slate-800 text-white w-full hover:bg-black hover:underline' type="submit" value="Login" onClick={(e) => { e.preventDefault() }}/>
                 <input className='p-4 bg-white w-full hover:bg-gray-200 hover:underline' type="button" value="Register"/>
             </div>
         </form>

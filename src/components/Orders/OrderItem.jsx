@@ -1,17 +1,16 @@
-import {useContext} from 'react'
+import { useContext } from 'react'
 import OrderContext from '../../store/OrderContext'
 import Card from '../../UI/Card/Card'
 
-const OrderItem = ({product}) => {
+const OrderItem = ({ product }) => {
+  const orderContext = useContext(OrderContext)
 
-  const orderContext = useContext(OrderContext);
-
-  const onRemoveElementHandler = () =>{
-    orderContext.removeItem(product.id, product.size);
+  const onRemoveElementHandler = () => {
+    orderContext.removeItem(product.id, product.size)
   }
 
   const onAddElementHandler = () => {
-    orderContext.addItem({...product, amount: 1});
+    orderContext.addItem({ ...product, amount: 1 })
   }
 
   return (
