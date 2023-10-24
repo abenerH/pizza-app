@@ -21,8 +21,8 @@ const OrdersContent = ({ onIncrement, items, subtotal }) => {
             <p>${total}</p>
         </div>
         <div className='w-full flex gap-x-4'>
-            <IconButton option={orderOptions.PICKUP} color={'green'} icon={faShop} onClick={onIncrementHandler}> {orderOptions.PICKUP}</IconButton>
-            <IconButton option={orderOptions.DELIVERY} color={'purple'} icon={faMotorcycle} onClick={onIncrementHandler}> {orderOptions.DELIVERY}</IconButton>
+            <IconButton option={orderOptions.PICKUP} color={'bg-green-500'} icon={faShop} onClick={onIncrementHandler}> {orderOptions.PICKUP}</IconButton>
+            <IconButton option={orderOptions.DELIVERY} color={'bg-purple-500'} icon={faMotorcycle} onClick={onIncrementHandler}> {orderOptions.DELIVERY}</IconButton>
         </div>
     </>
   )
