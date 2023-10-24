@@ -4,7 +4,8 @@ const OrderContext = createContext({
   items: [],
   total: 0,
   addItem: (item) => {},
-  removeItem: (id, category) => {}
+  removeItem: (id, category) => {},
+  emptyContext: () => {}
 })
 
 export default OrderContext

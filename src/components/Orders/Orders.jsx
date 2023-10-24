@@ -6,11 +6,13 @@ import useHttp from '../../hooks/useHttp'
 import Modal from '../../UI/Modal/Modal'
 import Card from '../../UI/Card/Card'
 
+const POST_URL = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/orders.json`
+
 const Orders = () => {
   const [showModal, setShowModal] = useState(false)
   const orderContext = useContext(OrderContext)
 
-  const { isLoading, error, sendRequest: sendOrder } = useHttp()
+  const { requestStatus, error, sendRequest: sendOrder } = useHttp()
 
   const items = orderContext.items
   const subtotal = +orderContext.total.toFixed(2)
@@ -21,7 +23,7 @@ const Orders = () => {
     setShowModal(true)
 
     sendOrder({
-      url: `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/orders.json`,
+      url: POST_URL,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,6 +34,7 @@ const Orders = () => {
     })
 
     // TODO: Empty context info here
+    orderContext.emptyContext()
   }
 
   const closeModal = () => {
@@ -57,7 +60,7 @@ const Orders = () => {
         <Modal onAction={closeModal}>
           <Card className='fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white w-2/5 h-1/4 p-8 text-center min-w-[3 00px] min-h-[300px] rounded-3xl overflow-hidden z-30'>
               <div className='flex flex-col items-center justify-evenly h-full'>
-              {isLoading
+              {requestStatus === 'loading'
                 ? (
                 <h2>Sending your order</h2>
                   )

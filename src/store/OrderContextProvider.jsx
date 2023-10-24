@@ -66,6 +66,12 @@ const orderReducer = (state, { type, payload }) => {
       total: updatedTotalAmount
     }
   }
+
+  if (type === 'EMPTY_ALL_DATA') {
+    return {
+      ...defaultOrderState
+    }
+  }
 }
 
 const OrderContextProvider = ({ children }) => {
@@ -83,11 +89,16 @@ const OrderContextProvider = ({ children }) => {
     orderStateDispatcher({ type: 'REMOVE_ITEM_FROM_ORDER', payload: { id, size } })
   }
 
+  const emptyAllData = () => {
+    orderStateDispatcher({ type: 'EMPTY_ALL_DATA' })
+  }
+
   const orderContext = {
     items: orderState.items,
     total: orderState.total,
     addItem: addItemToOrderHandler,
-    removeItem: removeItemFromOrderHandler
+    removeItem: removeItemFromOrderHandler,
+    emptyContext: emptyAllData
   }
 
   return (

@@ -2,15 +2,11 @@ import { useState } from 'react'
 import useInput from '../../../../hooks/use-input'
 import { validateName, validatePhone, validateEmail } from '../../../../helper/inputValidation'
 import { orderOptions } from '../../../../helper/dictionary'
-
-const getFormattedTime = () => {
-  const thirtyMinutes = new Date(Date.now() + 60 * 60000)
-  return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`
-}
+import getHour from '../../../../helper/getTime'
 
 const PickUpForm = ({ onSubmit, onDecrement }) => {
   const [time, setTime] = useState({
-    time: getFormattedTime(),
+    time: getHour(),
     isValid: true
   })
 
@@ -27,7 +23,7 @@ const PickUpForm = ({ onSubmit, onDecrement }) => {
     email.reset()
     cookingGuidelines.reset()
     setTime({
-      time: getFormattedTime(),
+      time: getHour(),
       isValid: true
     })
   }

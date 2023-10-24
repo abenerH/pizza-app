@@ -1,36 +1,37 @@
 import { useState, useCallback } from 'react'
 
 const useHttp = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [requestStatus, setRequestStatus] = useState(false)
   const [error, setError] = useState(null)
 
   const sendRequest = useCallback(async (requestConfig, applyData) => {
-    setIsLoading(true)
-    setError(false)
+    setRequestStatus('loading')
 
-    try {
-      const response = await fetch(requestConfig.url, {
-        method: requestConfig.method ? requestConfig.method : 'GET',
-        headers: requestConfig.headers ? requestConfig.headers : {},
-        body: requestConfig.body ? JSON.stringify(requestConfig.body) : null
+    const timeout = setTimeout(() => {
+      setRequestStatus('delayed')
+    }, 3000)
+
+    fetch(requestConfig.url, {
+      method: requestConfig.method ? requestConfig.method : 'GET',
+      headers: requestConfig.headers ? requestConfig.headers : {},
+      body: requestConfig.body ? JSON.stringify(requestConfig.body) : null
+    }).then(response => response.json())
+      .then(data => {
+        applyData(data)
+        setRequestStatus('done')
       })
-
-      if (!response.ok) {
+      .catch(() => {
+        setRequestStatus('error')
+        setError(error.message)
         throw new Error('Something went wrong!')
-      }
-
-      const data = await response.json()
-
-      applyData(data)
-    } catch (error) {
-      setError(error.message)
-    }
-
-    setIsLoading(false)
+      })
+      .finally(() => {
+        clearTimeout(timeout)
+      })
   }, [])
 
   return {
-    isLoading,
+    requestStatus,
     error,
     sendRequest
   }

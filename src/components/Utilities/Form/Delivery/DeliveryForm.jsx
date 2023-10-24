@@ -2,17 +2,13 @@ import useInput from '../../../../hooks/use-input'
 import { useState } from 'react'
 import { validateName, validatePhone, validateEmail, validateAddress, validateTime } from '../../../../helper/inputValidation'
 import { orderOptions } from '../../../../helper/dictionary'
+import getHour from '../../../../helper/getTime'
 import PropTypes from 'prop-types'
-
-const getFormattedTime = () => {
-  const thirtyMinutes = new Date(Date.now() + 60 * 60000)
-  return `${thirtyMinutes.getHours().toString()}:${thirtyMinutes.getMinutes().toString().padStart(2, '0')}`
-}
 
 const DeliveryForm = ({ onSubmit, onDecrement }) => {
   const [showTime, setShowTime] = useState(false)
   const [time, setTime] = useState({
-    time: getFormattedTime(),
+    time: getHour(),
     isValid: true
   })
 
@@ -33,7 +29,7 @@ const DeliveryForm = ({ onSubmit, onDecrement }) => {
     address.reset()
     deliveryGuidelines.reset()
     setTime({
-      time: getFormattedTime(),
+      time: getHour(),
       isValid: true
     })
   }
@@ -41,7 +37,7 @@ const DeliveryForm = ({ onSubmit, onDecrement }) => {
   const onTimeSelected = () => {
     setShowTime(true)
     setTime({
-      time: getFormattedTime(),
+      time: getHour(),
       isValid: true
     })
   }

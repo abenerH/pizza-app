@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 const OrdersContent = ({ onIncrement, items, subtotal }) => {
   const total = (subtotal + subtotal * 0.15).toFixed(2)
-  const onIncrementHandler = value => onIncrement(value)
+  const onIncrementHandler = option => onIncrement(option)
 
   return (
     <>
@@ -21,8 +21,8 @@ const OrdersContent = ({ onIncrement, items, subtotal }) => {
             <p>${total}</p>
         </div>
         <div className='w-full flex gap-x-4'>
-            <IconButton option={orderOptions.PICKUP} color={'bg-green-500'} icon={faShop} onClick={onIncrementHandler}> {orderOptions.PICKUP}</IconButton>
-            <IconButton option={orderOptions.DELIVERY} color={'bg-purple-500'} icon={faMotorcycle} onClick={onIncrementHandler}> {orderOptions.DELIVERY}</IconButton>
+            <IconButton option={orderOptions.PICKUP} color={'bg-green-500'} hover={'hover:bg-green-700'} icon={faShop} onClick={onIncrementHandler}> {orderOptions.PICKUP}</IconButton>
+            <IconButton option={orderOptions.DELIVERY} color={'bg-purple-500'} hover={'hover:bg-purple-700'} icon={faMotorcycle} onClick={onIncrementHandler}> {orderOptions.DELIVERY}</IconButton>
         </div>
     </>
   )
