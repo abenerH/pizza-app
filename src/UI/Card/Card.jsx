@@ -1,8 +1,6 @@
-import React from 'react'
-
-const Card = ({children, className}) => {
+const Card = ({ children, className, onclick }) => {
   return (
-    <div className={className ? className : ''}>
+    <div className={className || ''} onClick={onclick}>
         {children}
     </div>
   )
